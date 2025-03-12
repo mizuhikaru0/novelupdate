@@ -3,6 +3,7 @@ from flask import Blueprint, render_template, redirect, url_for, flash, request,
 from flask_login import login_user, logout_user, current_user, login_required
 from .models import User, Novel
 from . import db, login_manager
+from flask import jsonify
 
 main = Blueprint('main', __name__)
 
@@ -11,7 +12,16 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 # --- Otentikasi: Register, Login, Logout ---
-
+@main.route('/api/novels')
+def novels_api():
+    novels = Novel.query.filter_by(approved=True).all()
+    novels_data = [{
+        'title': novel.title,
+        'last_chapter': novel.last_chapter if novel.last_chapter else 'Belum ada update',
+        'last_update': novel.last_update.strftime('%Y-%m-%d %H:%M') if novel.last_update else '-',
+        'url': novel.url
+    } for novel in novels]
+    return jsonify(novels_data)
 @main.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
