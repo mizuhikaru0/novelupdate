@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Pelacak Update Web Novel</title>
+  <style>
+    table { border-collapse: collapse; width: 80%; margin: 20px auto; }
+    th, td { border: 1px solid #ccc; padding: 10px; text-align: left; }
+    th { background-color: #f4f4f4; }
+    a { text-decoration: none; color: blue; }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center;">Update Web Novel</h1>
+  <div style="text-align: center; margin-bottom: 20px;">
+    {% if current_user.is_authenticated %}
+      <a href="{{ url_for('main.add_novel') }}">Tambah Novel</a> | 
+      <a href="{{ url_for('main.logout') }}">Logout</a>
+      {% if current_user.is_admin %}
+        | <a href="{{ url_for('main.moderate') }}">Moderasi Novel</a> | 
+        <a href="{{ url_for('main.user_list') }}">Manajemen User</a>
+      {% endif %}
+    {% else %}
+      <a href="{{ url_for('main.login') }}">Login</a> | 
+      <a href="{{ url_for('main.register') }}">Register</a>
+    {% endif %}
+  </div>
+  <table>
+    <tr>
+      <th>Judul Novel</th>
+      <th>Chapter Terbaru</th>
+      <th>Waktu Update</th>
+      <th>Link</th>
+    </tr>
+    {% for novel in novels %}
+    <tr>
+      <td>{{ novel.title }}</td>
+      <td>{{ novel.last_chapter if novel.last_chapter else 'Belum ada update' }}</td>
+      <td>{{ novel.last_update.strftime('%Y-%m-%d %H:%M') if novel.last_update else '-' }}</td>
+      <td><a href="{{ novel.url }}" target="_blank">Buka RSS Feed</a></td>
+    </tr>
+    {% endfor %}
+  </table>
+</body>
+</html>

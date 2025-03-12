@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Manajemen User</title>
+  <style>
+    table { border-collapse: collapse; width: 80%; margin: 20px auto; }
+    th, td { border: 1px solid #ccc; padding: 10px; text-align: left; }
+    th { background-color: #f4f4f4; }
+    a { text-decoration: none; color: blue; }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center;">Manajemen User</h1>
+  <table>
+    <tr>
+      <th>ID</th>
+      <th>Username</th>
+      <th>Status</th>
+      <th>Aksi</th>
+    </tr>
+    {% for user in users %}
+    <tr>
+      <td>{{ user.id }}</td>
+      <td>{{ user.username }}</td>
+      <td>{{ "Admin" if user.is_admin else "User Biasa" }}</td>
+      <td>
+        {% if not user.is_admin %}
+          <a href="{{ url_for('main.make_admin', user_id=user.id) }}">Promosikan ke Admin</a>
+        {% else %}
+          -
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+  <div style="text-align: center;">
+    <a href="{{ url_for('main.index') }}">Kembali ke Beranda</a>
+  </div>
+</body>
+</html>

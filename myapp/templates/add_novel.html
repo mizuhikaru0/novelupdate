@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Tambah Novel</title>
+  <style>
+    form { width: 300px; margin: 40px auto; }
+    label, input { display: block; margin-bottom: 10px; width: 100%; }
+    button { padding: 8px 12px; }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center;">Tambah Novel</h1>
+  <form method="post">
+    <label for="title">Judul Novel:</label>
+    <input type="text" name="title" required>
+    <label for="url">URL RSS Feed:</label>
+    <input type="url" name="url" required>
+    <button type="submit">Simpan</button>
+  </form>
+  <div style="text-align: center;">
+    <a href="{{ url_for('main.index') }}">Kembali ke Beranda</a>
+  </div>
+</body>
+</html>

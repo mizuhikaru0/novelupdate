@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Moderasi Novel</title>
+  <style>
+    table { border-collapse: collapse; width: 80%; margin: 20px auto; }
+    th, td { border: 1px solid #ccc; padding: 10px; text-align: left; }
+    th { background-color: #f4f4f4; }
+    a { text-decoration: none; color: blue; }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center;">Moderasi Novel</h1>
+  <table>
+    <tr>
+      <th>Judul Novel</th>
+      <th>URL RSS Feed</th>
+      <th>Aksi</th>
+    </tr>
+    {% for novel in novels %}
+    <tr>
+      <td>{{ novel.title }}</td>
+      <td><a href="{{ novel.url }}" target="_blank">{{ novel.url }}</a></td>
+      <td><a href="{{ url_for('main.approve_novel', novel_id=novel.id) }}">Setujui</a></td>
+    </tr>
+    {% endfor %}
+  </table>
+  <div style="text-align: center;">
+    <a href="{{ url_for('main.index') }}">Kembali ke Beranda</a>
+  </div>
+</body>
+</html>
